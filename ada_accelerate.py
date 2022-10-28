@@ -150,11 +150,42 @@ def print_violet(s):
     return '\033[35m' + s + '\033[0m'
 
 
+def display_colors(colors_list):
+  colored_guess = ''
+  colors_dict = {
+    "R": print_red("R"),
+    "Y": print_yellow("Y"),
+    "G": print_green("G"),
+    "B": print_blue("B"),
+    "I": print_indigo("I"),
+    "V": print_violet("V")
+  }
+  for color in colors_list:
+    colored_letter = colors_dict[color]
+    colored_guess += colored_letter
+  return colored_guess
+
+
+
+def winning_streak(dictionray):
+  streaks = []
+  single_streak = 0
+  for i in range(len(dictionray)):
+    if dictionray[i+1]:
+      single_streak += 1
+    else:
+      streaks.append(single_streak)
+      single_streak = 0
+  if single_streak != 0:
+    streaks.append(single_streak)
+  return max(streaks)
+
 def mastermind():
   plays = 0
   wins = 0
   guess_stats = {}
   num_guesses = 0
+  all_games_results = {}
   print("Welcome yto Mastermind!")
 
   def get_code():
@@ -172,7 +203,7 @@ def mastermind():
         for color in guess_input:
             guess.append(color.upper())
         if validate_guess(guess):
-            print(f'You guessed: {guess_input}')
+            print(f'You guessed: {display_colors(guess)}')
             no_guess = False
             return guess
         else:
@@ -222,6 +253,7 @@ def mastermind():
     if check_win_or_lose(guess,code,num_guesses):
         print("Congratulations! You guessed the secret code!")
         wins += 1
+        all_games_results[plays] = True
         if num_guesses in guess_stats:
             guess_stats[num_guesses] += 1
         else:
@@ -229,6 +261,7 @@ def mastermind():
         num_guesses = 0
     else:
         print("You lost \U0001F622 Better luck next time!")  
+        all_games_results[plays] = False
         num_guesses = 0
 
     print(f"STATISTICS \nGames Played:{plays} \nWin %: {get_win_percentage(wins, plays)} \nGuess Distribution:")
@@ -236,6 +269,8 @@ def mastermind():
     for i in range (8):
       print(f"{i+1}|{format_guess_stats(guess_stats)[i]}")
 
+    print("the game restuls are sor far:", all_games_results)
+    print(f"Your winning streak is {winning_streak(all_games_results)}")
     print("Should we play another round? \nEnter y to replay, and any other character to exit:")
     ask_play_again = input("")
     print("\n")

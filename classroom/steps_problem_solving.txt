@@ -1,0 +1,5 @@
+to solve a problem:
+
+1- Break down the problem into a list of sub-problems
+2- Write pseudocode first
+3- Then Python code
