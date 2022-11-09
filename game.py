@@ -1,6 +1,6 @@
 def validate_input(input):
     valid_input = ["rock", "paper", "scissors"]
-    if input.lower() in valid_input:
+    if input in valid_input:
         return True
     return False
 
