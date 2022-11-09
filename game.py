@@ -10,9 +10,11 @@ def winner():
 
     while not validate_input(player_1):
         player_1 = input("Please choose rock, paper or scissors for the first player: ")
+        player_1 = player_1.lower()
     
     while not validate_input(player_2):
         player_2 = input("Please choose rock, paper or scissors for the second player: ")
+        player_2 = player_2.lower()
 
     inputs = [player_1, player_2]
 
